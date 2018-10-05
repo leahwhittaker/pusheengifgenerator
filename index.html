@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pusheen - Mad, Sad, Glad</title>
+
+    <meta name=viewport content="width=device-width, initial-scale=1">
+
+    <script>
+        window.onload = function () {
+
+            var grubData = new XMLHttpRequest();
+            grubData.onreadystatechange = function() {
+                console.log('grubData', grubData)
+                if (grubData.readyState === 4 && grubData.status === 200) {
+                    console.log('responseText', grubData.responseText)
+                    var data = JSON.parse(grubData.responseText);
+                    var changeColor;
+                    if (data.change < 0) {
+                        changeColor = '#d23f31';
+                    } else if (data.change > 0) {
+                        changeColor = '#0f9d58';
+                    } else {
+                        changeColor = '';
+                    }
+                    document.getElementById('grub-price').style.color = changeColor;
+                    document.getElementById('grub-change').style.color = changeColor;
+                    document.getElementById('grub-perc-change').style.color = changeColor;
+
+                    document.getElementById('grub-price').textContent = data.latestPrice;
+                    document.getElementById('grub-change').textContent = data.change;
+                    document.getElementById('grub-perc-change').textContent = '(' + (data.changePercent * 100)+ '%)';
+
+
+                    var pusheenEmotion = data.change > 0 ? 'glad' : 'mad';
+
+                    var pusheenGifData = new XMLHttpRequest();
+                    pusheenGifData.onreadystatechange = function() {
+                        if (pusheenGifData.readyState === 4 && pusheenGifData.status === 200) {
+                            console.log('pusheenEmotion', pusheenEmotion)
+                            console.log(pusheenGifData.responseText);
+                            var data = JSON.parse(pusheenGifData.responseText);
+                            var gifSrc = data[pusheenEmotion][Math.floor(data[pusheenEmotion].length * Math.random())];
+                            document.getElementById('pusheen-gif').src = gifSrc;
+                            console.log(gifSrc);
+                        }
+                    }.bind(this);
+
+                    pusheenGifData.open("GET", './gifs.json', true);
+                    pusheenGifData.send();
+                }
+            }
+            grubData.open("GET", 'https://api.iextrading.com/1.0/stock/grub/quote', true);
+            grubData.send();
+            // data-reactid
+
+            
+
+        }
+
+        function fetchStockData() {
+
+        }
+    </script>
+</head>
+<body>
+    <div id="grub-info">
+        <div style="font-size: 4em;">
+            <span>GRUB</span>
+            <span id="grub-price"></span>
+        </div>
+        <div style="font-size: 2em;">
+            <span id="grub-change"></span>
+            <span id="grub-perc-change"></span>
+        </div>
+    </div>
+    <img id="pusheen-gif" style="height: 500px" src="" />
+</body>
+</html>
