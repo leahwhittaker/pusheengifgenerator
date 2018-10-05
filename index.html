@@ -5,6 +5,7 @@
     <title>Pusheen - Mad, Sad, Glad</title>
 
     <meta name=viewport content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet">
 
     <script>
         window.onload = function () {
@@ -27,7 +28,7 @@
                     document.getElementById('grub-change').style.color = changeColor;
                     document.getElementById('grub-perc-change').style.color = changeColor;
 
-                    document.getElementById('grub-price').textContent = data.latestPrice;
+                    document.getElementById('grub-price').textContent = '$' + data.latestPrice;
                     document.getElementById('grub-change').textContent = data.change;
                     document.getElementById('grub-perc-change').textContent = '(' + (data.changePercent * 100)+ '%)';
 
@@ -64,8 +65,8 @@
     </script>
 </head>
 <body>
-    <div id="grub-info">
-        <div style="font-size: 4em;">
+    <div id="grub-info" style="font-family: 'Roboto', sans-serif">
+        <div style="font-size: 4em; font-weight: 900">
             <span>GRUB</span>
             <span id="grub-price"></span>
         </div>
@@ -74,6 +75,6 @@
             <span id="grub-perc-change"></span>
         </div>
     </div>
-    <img id="pusheen-gif" style="height: 500px" src="" />
+    <img id="pusheen-gif" style="height: 500px; margin-top: 1em;" src="" />
 </body>
 </html>
