@@ -28,9 +28,9 @@
                     document.getElementById('grub-change').style.color = changeColor;
                     document.getElementById('grub-perc-change').style.color = changeColor;
 
-                    document.getElementById('grub-price').textContent = '$' + data.latestPrice;
-                    document.getElementById('grub-change').textContent = data.change;
-                    document.getElementById('grub-perc-change').textContent = '(' + (data.changePercent * 100)+ '%)';
+                    document.getElementById('grub-price').textContent = '$' + Number(data.latestPrice).toFixed(2);
+                    document.getElementById('grub-change').textContent = Number(data.change).toFixed(2);
+                    document.getElementById('grub-perc-change').textContent = '(' + (Number.parseFloat(data.changePercent * 100).toFixed(2))+ '%)';
 
 
                     var pusheenEmotion = data.change > 0 ? 'glad' : 'mad';
@@ -53,9 +53,7 @@
             }
             grubData.open("GET", 'https://api.iextrading.com/1.0/stock/grub/quote', true);
             grubData.send();
-            // data-reactid
-
-            
+                       
 
         }
 
